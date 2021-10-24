@@ -1,8 +1,10 @@
 package controller;
 
+import model.FlowerBox;
 import model.Plant;
 import model.Storage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +14,14 @@ public class Controller {
 
     //Map with plants and their possible combinations of partition that sum to initial amount of this plant
     private final Map<Plant, List<List<Integer>>> plantPossiblePartitions;
+    private final List<List<FlowerBox>> flowerBoxesCombinations;
 
     public Controller(Storage storage) {
         this.storage = storage;
         this.plantPossiblePartitions = new HashMap<>();
         addPlantPartitions();
+        this.flowerBoxesCombinations = new ArrayList<>();
+
     }
 
     private void addPlantPartitions() {
