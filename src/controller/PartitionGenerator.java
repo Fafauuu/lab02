@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartitionGenerator {
-    private static final List<List<Integer>> partitionsList = new ArrayList<>();
+    private static List<List<Integer>> partitionsList;
 
     public static List<List<Integer>> partition(int n) {
-        partitionsList.clear();
+        partitionsList = new ArrayList<>();
         partition(n, n, "");
         return partitionsList;
     }

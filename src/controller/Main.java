@@ -15,6 +15,7 @@ public class Main {
         consoleWriter.printPlants();
 
         Controller controller = new Controller(storage);
+        controller.soutPossiblePartitions();
 
 //        CombinationGenerator cg = new CombinationGenerator(10,3);
 //        while(cg.hasMore()){

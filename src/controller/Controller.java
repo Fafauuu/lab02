@@ -21,13 +21,27 @@ public class Controller {
         this.plantPossiblePartitions = new HashMap<>();
         addPlantPartitions();
         this.flowerBoxesCombinations = new ArrayList<>();
-
+        addFlowerBoxesCombinations();
     }
 
     private void addPlantPartitions() {
-        for (int i = 0; i < storage.getPlants().size(); i++) {
-            Plant plant = storage.getPlants().get(i);
-            plantPossiblePartitions.put(plant, PartitionGenerator.partition(storage.getPlantAmount(plant)));
+        for (Plant plant : storage.getPlants()) {
+            int plantAmount = storage.getPlantAmounts().get(plant);
+            List<List<Integer>> plantAmounts = PartitionGenerator.partition(plantAmount);
+            plantPossiblePartitions.put(plant, plantAmounts);
+        }
+    }
+
+    private void addFlowerBoxesCombinations() {
+    }
+
+    public void soutPossiblePartitions(){
+        for (Plant plant : plantPossiblePartitions.keySet()) {
+            System.out.println("plant: " + plant.getPlantType());
+            for (List<Integer> partitions : plantPossiblePartitions.get(plant)) {
+                System.out.println(partitions);
+            }
+            System.out.println();
         }
     }
 

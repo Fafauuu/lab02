@@ -2,6 +2,7 @@ package view;
 
 import model.Border;
 import model.FlowerBox;
+import model.Plant;
 import model.Storage;
 
 import java.util.List;
@@ -36,10 +37,10 @@ public class ConsoleWriter {
     }
 
     public void printPlants(){
-        Map<Integer, Integer> plantAmounts = storage.getPlantAmounts();
+        Map<Plant, Integer> plantAmounts = storage.getPlantAmounts();
         System.out.println("Plants:");
-        for (Integer plant : plantAmounts.keySet()) {
-            System.out.println(plant + " amount: " + plantAmounts.get(plant));
+        for (Plant plant : plantAmounts.keySet()) {
+            System.out.println(plant.getPlantType() + " amount: " + plantAmounts.get(plant));
         }
         System.out.println();
     }

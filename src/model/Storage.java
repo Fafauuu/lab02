@@ -8,7 +8,7 @@ import java.util.Map;
 public class Storage {
     private List<Border> borders;
     private List<Plant> plants;
-    private Map<Integer, Integer> plantAmounts;
+    private Map<Plant, Integer> plantAmounts;
 
     public Storage() {
         this.borders = new ArrayList<>();
@@ -32,20 +32,19 @@ public class Storage {
         this.plants = plants;
     }
 
-    public Map<Integer, Integer> getPlantAmounts() {
+    public Map<Plant, Integer> getPlantAmounts() {
         return plantAmounts;
     }
 
-    public int getPlantAmount(Plant plant){
-        int plantTypeToReturn = 0;
-        for (Integer plantType : plantAmounts.keySet()) {
-            if (plantType == plant.getPlantType())
-                plantTypeToReturn = plantAmounts.get(plantType);
+    public void setPlantAmounts(Map<Integer, Integer> plantAmountsPassed) {
+        Map<Plant, Integer> plantAmounts = new HashMap<>();
+        for (Integer plantType : plantAmountsPassed.keySet()) {
+            for (Plant plant : plants) {
+                if (plant.getPlantType() == plantType){
+                    plantAmounts.put(plant, plantAmountsPassed.get(plantType));
+                }
+            }
         }
-        return plantTypeToReturn;
-    }
-
-    public void setPlantAmounts(Map<Integer, Integer> plantAmounts) {
         this.plantAmounts = plantAmounts;
     }
 }
