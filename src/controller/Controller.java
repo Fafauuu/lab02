@@ -1,6 +1,7 @@
 package controller;
 
 import model.FlowerBox;
+import model.FlowerBoxesCombinationList;
 import model.Plant;
 import model.Storage;
 
@@ -14,7 +15,7 @@ public class Controller {
 
     //Map with plants and their possible combinations of partition that sum to initial amount of this plant
     private final Map<Plant, List<List<Integer>>> plantPossiblePartitions;
-    private final List<List<FlowerBox>> flowerBoxesCombinations;
+    private final List<FlowerBoxesCombinationList> flowerBoxesCombinations;
 
     public Controller(Storage storage) {
         this.storage = storage;
@@ -33,6 +34,10 @@ public class Controller {
     }
 
     private void addFlowerBoxesCombinations() {
+        List<FlowerBox> flowerBoxes = new ArrayList<>();
+        for (Plant plant : plantPossiblePartitions.keySet()) {
+
+        }
     }
 
     public void soutPossiblePartitions(){
