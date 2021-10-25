@@ -1,7 +1,7 @@
 package controller;
 
 import model.FlowerBox;
-import model.FlowerBoxesCombinationList;
+import model.FlowerBoxesCombination;
 import model.Plant;
 import model.Storage;
 
@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Controller {
+public class Generator {
     private final Storage storage;
 
     //Map with plants and their possible combinations of partition that sum to initial amount of this plant
     private final Map<Plant, List<List<Integer>>> plantPossiblePartitions;
-    private final List<FlowerBoxesCombinationList> flowerBoxesCombinations;
+    private final List<FlowerBoxesCombination> flowerBoxesCombinations;
 
-    public Controller(Storage storage) {
+    public Generator(Storage storage) {
         this.storage = storage;
         this.plantPossiblePartitions = new HashMap<>();
         addPlantPartitions();
@@ -35,8 +35,19 @@ public class Controller {
 
     private void addFlowerBoxesCombinations() {
         List<FlowerBox> flowerBoxes = new ArrayList<>();
-        for (Plant plant : plantPossiblePartitions.keySet()) {
+        for (Plant outerPlant : plantPossiblePartitions.keySet()) {
 
+        }
+    }
+
+    void generateCombinations(List<List<FlowerBoxesCombination>> lists, List<String> result, int depth, String current) {
+        if (depth == lists.size()) {
+            result.add(current);
+            return;
+        }
+
+        for (int i = 0; i < lists.get(depth).size(); i++) {
+            generateCombinations(lists, result, depth + 1, current + lists.get(depth).get(i));
         }
     }
 
@@ -48,10 +59,6 @@ public class Controller {
             }
             System.out.println();
         }
-    }
-
-    public Storage getStorage() {
-        return storage;
     }
 
     public Map<Plant, List<List<Integer>>> getPlantPossiblePartitions() {
