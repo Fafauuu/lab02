@@ -12,7 +12,8 @@ public class Generator {
 
     //Map with plants and their possible combinations of partition that sum to initial amount of this plant
     private final Map<Plant, List<List<Integer>>> plantPossiblePartitions;
-    private final List<List<SingleFlowerBoxesPackage>> allFlowerBoxesPackages;
+    private final List<List<FlowerBoxesPackage>> allFlowerBoxesPackages;
+    private List<String> allPossibleFlowerBoxesCombinations;
 
     public Generator(Storage storage) {
         this.storage = storage;
@@ -20,6 +21,11 @@ public class Generator {
         addPlantPartitions();
         this.allFlowerBoxesPackages = new ArrayList<>();
         addAllFlowerBoxesPackages();
+        this.allPossibleFlowerBoxesCombinations = new ArrayList<>();
+        generateCombinations(allFlowerBoxesPackages, allPossibleFlowerBoxesCombinations, 0, ";");
+        for (String s : allPossibleFlowerBoxesCombinations) {
+            System.out.println(s);
+        }
     }
 
     private void addPlantPartitions() {
@@ -30,6 +36,7 @@ public class Generator {
         }
     }
 
+    //TODO delete
     public void soutPossiblePartitions(){
         for (Plant plant : plantPossiblePartitions.keySet()) {
             System.out.println("plant: " + plant.getPlantType());
@@ -41,29 +48,26 @@ public class Generator {
     }
 
     private void addAllFlowerBoxesPackages() {
-        List<SingleFlowerBoxesPackage> listOfSingleFlowerBoxesPackages = new ArrayList<>();
-        SingleFlowerBoxesPackage singleFlowerBoxesPackage;
         for (Plant plant : plantPossiblePartitions.keySet()) {
-            singleFlowerBoxesPackage = new SingleFlowerBoxesPackage(createFlowerBoxes(plant));
+            allFlowerBoxesPackages.add(getListOfFlowerPossibleBoxesPackages((Flower) plant));
         }
     }
 
-    private List<FlowerBox> createFlowerBoxes(Plant plant) {
-
-        SingleFlowerBoxesPackage singleFlowerBoxesPackage;
-        List<FlowerBox> singlePossibilityFlowerBoxes;
-        List<List<Integer>> allSplitPossibilities = plantPossiblePartitions.get(plant);
+    private List<FlowerBoxesPackage> getListOfFlowerPossibleBoxesPackages(Flower flower) {
+        List<FlowerBoxesPackage> listOfSingleFlowerPossibleBoxesPackages = new ArrayList<>();
+        List<FlowerBox> singleFlowerPossibleBoxesPackage;
+        List<List<Integer>> allSplitPossibilities = plantPossiblePartitions.get(flower);
         for (List<Integer> splitPossibility : allSplitPossibilities) {
-            singlePossibilityFlowerBoxes = new ArrayList<>();
+            singleFlowerPossibleBoxesPackage = new ArrayList<>();
             for (Integer plantAmount : splitPossibility) {
-                singlePossibilityFlowerBoxes.add(new FlowerBox((Flower) plant, plantAmount));
+                singleFlowerPossibleBoxesPackage.add(new FlowerBox(flower, plantAmount));
             }
-            singleFlowerBoxesPackage = new SingleFlowerBoxesPackage(singlePossibilityFlowerBoxes);
+            listOfSingleFlowerPossibleBoxesPackages.add(new FlowerBoxesPackage(singleFlowerPossibleBoxesPackage));
         }
-        return null;
+        return listOfSingleFlowerPossibleBoxesPackages;
     }
 
-    void generateCombinations(List<List<SingleFlowerBoxesPackage>> lists, List<String> result, int depth, String current) {
+    public void generateCombinations(List<List<FlowerBoxesPackage>> lists, List<String> result, int depth, String current) {
         if (depth == lists.size()) {
             result.add(current);
             return;

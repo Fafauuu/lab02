@@ -2,10 +2,10 @@ package model;
 
 import java.util.List;
 
-public class SingleFlowerBoxesPackage {
+public class FlowerBoxesPackage {
     private List<FlowerBox> flowerBoxes;
 
-    public SingleFlowerBoxesPackage(List<FlowerBox> flowerBoxes) {
+    public FlowerBoxesPackage(List<FlowerBox> flowerBoxes) {
         this.flowerBoxes = flowerBoxes;
     }
 

@@ -2,7 +2,7 @@ package controller;
 
 import model.Flower;
 import model.FlowerBox;
-import model.SingleFlowerBoxesPackage;
+import model.FlowerBoxesPackage;
 import model.Storage;
 import view.ConsoleWriter;
 
@@ -25,55 +25,55 @@ public class Main {
 
         List<FlowerBox> flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 3));
-        SingleFlowerBoxesPackage boxList1 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList1 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 2));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 1));
-        SingleFlowerBoxesPackage boxList2 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList2 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(0), 1));
-        SingleFlowerBoxesPackage boxList3 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList3 = new FlowerBoxesPackage(flowerBoxList);
 
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 4));
-        SingleFlowerBoxesPackage boxList4 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList4 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 3));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
-        SingleFlowerBoxesPackage boxList5 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList5 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 2));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 2));
-        SingleFlowerBoxesPackage boxList6 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList6 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 2));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
-        SingleFlowerBoxesPackage boxList7 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList7 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(1), 1));
-        SingleFlowerBoxesPackage boxList8 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList8 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(2), 2));
-        SingleFlowerBoxesPackage boxList9 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList9 = new FlowerBoxesPackage(flowerBoxList);
 
         flowerBoxList = new ArrayList<>();
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(2), 1));
         flowerBoxList.add(new FlowerBox((Flower) storage.getPlants().get(2), 1));
-        SingleFlowerBoxesPackage boxList10 = new SingleFlowerBoxesPackage(flowerBoxList);
+        FlowerBoxesPackage boxList10 = new FlowerBoxesPackage(flowerBoxList);
 
         boxList1.soutList();
         boxList2.soutList();
@@ -88,32 +88,32 @@ public class Main {
 
         System.out.println("box1 equals box2? " + boxList1.equals(boxList2));
 
-        List<SingleFlowerBoxesPackage> listOfPackages1 = new ArrayList<>();
+        List<FlowerBoxesPackage> listOfPackages1 = new ArrayList<>();
         listOfPackages1.add(boxList1);
         listOfPackages1.add(boxList2);
         listOfPackages1.add(boxList3);
 
-        List<SingleFlowerBoxesPackage> listOfPackages2 = new ArrayList<>();
+        List<FlowerBoxesPackage> listOfPackages2 = new ArrayList<>();
         listOfPackages2.add(boxList4);
         listOfPackages2.add(boxList5);
         listOfPackages2.add(boxList6);
         listOfPackages2.add(boxList7);
         listOfPackages2.add(boxList8);
 
-        List<SingleFlowerBoxesPackage> listOfPackages3 = new ArrayList<>();
+        List<FlowerBoxesPackage> listOfPackages3 = new ArrayList<>();
         listOfPackages3.add(boxList9);
         listOfPackages3.add(boxList10);
 
-        List<List<SingleFlowerBoxesPackage>> argument = new ArrayList<>();
+        List<List<FlowerBoxesPackage>> argument = new ArrayList<>();
         argument.add(listOfPackages1);
         argument.add(listOfPackages2);
         argument.add(listOfPackages3);
 
         System.out.println();
         System.out.println("test");
-        for (List<SingleFlowerBoxesPackage> singleFlowerBoxesPackages : argument) {
-            for (SingleFlowerBoxesPackage singleFlowerBoxesPackage : singleFlowerBoxesPackages) {
-                System.out.println(singleFlowerBoxesPackage);
+        for (List<FlowerBoxesPackage> flowerBoxesPackages : argument) {
+            for (FlowerBoxesPackage flowerBoxesPackage : flowerBoxesPackages) {
+                System.out.println(flowerBoxesPackage);
             }
         }
         System.out.println("koniec testu");
@@ -129,8 +129,10 @@ public class Main {
         for (String s : result) {
             System.out.println(s);
         }
+        System.out.println();
+        System.out.println();
 
-//        List<SingleFlowerBoxesPackage> argument = new ArrayList<>();
+//        List<FlowerBoxesPackage> argument = new ArrayList<>();
 //        argument.add(boxList1);
 //        argument.add(boxList2);
 //
