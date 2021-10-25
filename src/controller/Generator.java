@@ -23,9 +23,6 @@ public class Generator {
         addAllFlowerBoxesPackages();
         this.allPossibleFlowerBoxesCombinations = new ArrayList<>();
         generateCombinations(allFlowerBoxesPackages, allPossibleFlowerBoxesCombinations, 0, ";");
-        for (String s : allPossibleFlowerBoxesCombinations) {
-            System.out.println(s);
-        }
     }
 
     private void addPlantPartitions() {
@@ -45,6 +42,14 @@ public class Generator {
             }
             System.out.println();
         }
+    }
+
+    //TODO delete
+    public void soutAllFlowerBoxesCombinations(){
+        for (String s : allPossibleFlowerBoxesCombinations) {
+            System.out.println(s);
+        }
+        System.out.println();
     }
 
     private void addAllFlowerBoxesPackages() {
