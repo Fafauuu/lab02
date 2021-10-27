@@ -7,68 +7,64 @@ import java.util.*;
 public class Generator {
     private final Storage storage;
 
-    //Map with plants and their possible combinations of partition that sum to initial amount of this plant
-    private final Map<Plant, List<List<Integer>>> plantPossiblePartitions;
-    private final List<List<FlowerBoxesPackage>> allFlowerBoxesPackages;
-    private final List<List<FlowerBoxesPackage>> allFlowerBoxesCombinations;
+    //Map with plants and their possible combinations of splitting that sum to initial amount of this plant
+    private final Map<Plant, List<List<Integer>>> plantPossibleSplitting;
+    private final List<List<List<FlowerBox>>> listOfFlowerPackingPossibilities;
+    private final List<List<List<FlowerBox>>> allFlowerBoxesCombinations;
 
     public Generator(Storage storage) {
         this.storage = storage;
-        this.plantPossiblePartitions = new HashMap<>();
-        addPlantPartitions();
-        this.allFlowerBoxesPackages = new ArrayList<>();
-        addAllFlowerBoxesPackages();
-        this.allFlowerBoxesCombinations = CombinationGenerator.getCombinations(allFlowerBoxesPackages);
+        this.plantPossibleSplitting = new HashMap<>();
+        generateAllPlantSplittings();
+        this.listOfFlowerPackingPossibilities = new ArrayList<>();
+        generateListOfFlowerPackingPossibilities();
+        this.allFlowerBoxesCombinations = CombinationGenerator.getCombinations(listOfFlowerPackingPossibilities);
     }
 
-    private void addPlantPartitions() {
+    private void generateAllPlantSplittings() {
         for (Plant plant : storage.getPlants()) {
             int plantAmount = storage.getPlantAmounts().get(plant);
-            List<List<Integer>> plantAmounts = PartitionGenerator.partition(plantAmount);
-            plantPossiblePartitions.put(plant, plantAmounts);
+            List<List<Integer>> plantAmounts = SplittingGenerator.split(plantAmount);
+            plantPossibleSplitting.put(plant, plantAmounts);
         }
     }
 
     //TODO delete
-    public void soutPossiblePartitions(){
-        for (Plant plant : plantPossiblePartitions.keySet()) {
+    public void soutPossibleSplittings(){
+        for (Plant plant : plantPossibleSplitting.keySet()) {
             System.out.println("plant: " + plant.getPlantType());
-            for (List<Integer> partitions : plantPossiblePartitions.get(plant)) {
+            for (List<Integer> partitions : plantPossibleSplitting.get(plant)) {
                 System.out.println(partitions);
             }
             System.out.println();
         }
     }
 
+    private void generateListOfFlowerPackingPossibilities() {
+        for (Plant plant : plantPossibleSplitting.keySet()) {
+            listOfFlowerPackingPossibilities.add(createListOfSingleFlowerPackingPossibilities((Flower) plant));
+        }
+    }
+
+    private List<List<FlowerBox>> createListOfSingleFlowerPackingPossibilities(Flower flower) {
+        List<List<FlowerBox>> listOfPackingPossibilities = new ArrayList<>();
+        List<FlowerBox> singlePackingPossibility;
+        List<List<Integer>> allFlowerSplittingPossibilities = plantPossibleSplitting.get(flower);
+        for (List<Integer> splitPossibility : allFlowerSplittingPossibilities) {
+            singlePackingPossibility = new ArrayList<>();
+            for (Integer plantAmount : splitPossibility) {
+                singlePackingPossibility.add(new FlowerBox(flower, plantAmount));
+            }
+            listOfPackingPossibilities.add(singlePackingPossibility);
+        }
+        return listOfPackingPossibilities;
+    }
+
     //TODO delete
     public void soutAllFlowerBoxesCombinations(){
-        for (List<FlowerBoxesPackage> allFlowerBoxesCombination : allFlowerBoxesCombinations) {
-            System.out.println(allFlowerBoxesCombination);
+        for (List<List<FlowerBox>> flowerBoxesCombination : allFlowerBoxesCombinations) {
+            System.out.println(flowerBoxesCombination);
         }
         System.out.println(allFlowerBoxesCombinations.size());
-    }
-
-    private void addAllFlowerBoxesPackages() {
-        for (Plant plant : plantPossiblePartitions.keySet()) {
-            allFlowerBoxesPackages.add(getListOfFlowerPossibleBoxesPackages((Flower) plant));
-        }
-    }
-
-    private List<FlowerBoxesPackage> getListOfFlowerPossibleBoxesPackages(Flower flower) {
-        List<FlowerBoxesPackage> listOfSingleFlowerPossibleBoxesPackages = new ArrayList<>();
-        List<FlowerBox> singleFlowerPossibleBoxesPackage;
-        List<List<Integer>> allSplitPossibilities = plantPossiblePartitions.get(flower);
-        for (List<Integer> splitPossibility : allSplitPossibilities) {
-            singleFlowerPossibleBoxesPackage = new ArrayList<>();
-            for (Integer plantAmount : splitPossibility) {
-                singleFlowerPossibleBoxesPackage.add(new FlowerBox(flower, plantAmount));
-            }
-            listOfSingleFlowerPossibleBoxesPackages.add(new FlowerBoxesPackage(singleFlowerPossibleBoxesPackage));
-        }
-        return listOfSingleFlowerPossibleBoxesPackages;
-    }
-
-    public Map<Plant, List<List<Integer>>> getPlantPossiblePartitions() {
-        return plantPossiblePartitions;
     }
 }

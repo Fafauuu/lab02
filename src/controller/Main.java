@@ -15,7 +15,7 @@ public class Main {
         consoleWriter.printPlants();
 
         Generator generator = new Generator(storage);
-        generator.soutPossiblePartitions();
-//        generator.soutAllFlowerBoxesCombinations();
+        generator.soutPossibleSplittings();
+        generator.soutAllFlowerBoxesCombinations();
     }
 }

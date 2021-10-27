@@ -3,23 +3,23 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartitionGenerator {
-    private static List<List<Integer>> partitionsList;
+public class SplittingGenerator {
+    private static List<List<Integer>> splittingList;
 
-    public static List<List<Integer>> partition(int n) {
-        partitionsList = new ArrayList<>();
-        partition(n, n, "");
-        return partitionsList;
+    public static List<List<Integer>> split(int n) {
+        splittingList = new ArrayList<>();
+        split(n, n, "");
+        return splittingList;
     }
 
-    public static void partition(int n, int max, String prefix) {
+    public static void split(int n, int max, String prefix) {
 
         if (n == 0) {
-            partitionsList.add(divide(prefix));
+            splittingList.add(divide(prefix));
         }
 
         for (int i = Math.min(max, n); i >= 1; i--) {
-            partition(n - i, i, prefix + " " + i);
+            split(n - i, i, prefix + " " + i);
         }
     }
 

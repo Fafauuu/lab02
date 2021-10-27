@@ -10,8 +10,6 @@ public class CombinationGenerator {
 
         int index = 0;
 
-        // extract each of the integers in the first list
-        // and add each to ints as a new list
         for (T i : lists.get(0)) {
             List<T> newList = new ArrayList<>();
             newList.add(i);
