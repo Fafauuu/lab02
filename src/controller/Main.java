@@ -16,6 +16,6 @@ public class Main {
 
         Generator generator = new Generator(storage);
         generator.soutPossiblePartitions();
-        generator.soutAllFlowerBoxesCombinations();
+//        generator.soutAllFlowerBoxesCombinations();
     }
 }
