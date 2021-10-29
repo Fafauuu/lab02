@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CombinationGenerator {
+public class ListCombiner {
     public static <T> List<List<T>> getCombinations(List<List<T>> lists) {
         List<List<T>> combinations = new ArrayList<>();
         List<List<T>> newCombinations;

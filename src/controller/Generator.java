@@ -6,50 +6,35 @@ import java.util.*;
 
 public class Generator {
     private final Storage storage;
+    private final Combinations combinations;
 
-    //Map with plants and their possible combinations of splitting that sum to initial amount of this plant
-    private final Map<Plant, List<List<Integer>>> plantPossibleSplitting;
-    private final List<List<List<FlowerBox>>> listOfFlowerPackingPossibilities;
-    private final List<List<List<FlowerBox>>> allFlowerBoxesCombinations;
-
-    public Generator(Storage storage) {
+    public Generator(Storage storage, Combinations combinations) {
         this.storage = storage;
-        this.plantPossibleSplitting = new HashMap<>();
-        generateAllPlantSplittings();
-        this.listOfFlowerPackingPossibilities = new ArrayList<>();
-        generateListOfFlowerPackingPossibilities();
-        this.allFlowerBoxesCombinations = CombinationGenerator.getCombinations(listOfFlowerPackingPossibilities);
+        this.combinations = combinations;
     }
 
-    private void generateAllPlantSplittings() {
+    public void generateAllPlantSplittings() {
+        Map<Plant, List<List<Integer>>> plantPossibleSplitting = new HashMap<>();
         for (Plant plant : storage.getPlants()) {
             int plantAmount = storage.getPlantAmounts().get(plant);
-            List<List<Integer>> plantAmounts = SplittingGenerator.split(plantAmount);
+            List<List<Integer>> plantAmounts = ListSplitter.split(plantAmount);
             plantPossibleSplitting.put(plant, plantAmounts);
         }
+        combinations.setPlantPossibleSplitting(plantPossibleSplitting);
     }
 
-    //TODO delete
-    public void soutPossibleSplittings(){
-        for (Plant plant : plantPossibleSplitting.keySet()) {
-            System.out.println("plant: " + plant.getPlantType());
-            for (List<Integer> partitions : plantPossibleSplitting.get(plant)) {
-                System.out.println(partitions);
-            }
-            System.out.println();
-        }
-    }
-
-    private void generateListOfFlowerPackingPossibilities() {
-        for (Plant plant : plantPossibleSplitting.keySet()) {
+    public void generateListOfFlowersPackingPossibilities() {
+        List<List<List<FlowerBox>>> listOfFlowerPackingPossibilities = new ArrayList<>();
+        for (Plant plant : combinations.getPlantPossibleSplitting().keySet()) {
             listOfFlowerPackingPossibilities.add(createListOfSingleFlowerPackingPossibilities((Flower) plant));
         }
+        combinations.setListOfFlowersPackingPossibilities(listOfFlowerPackingPossibilities);
     }
 
     private List<List<FlowerBox>> createListOfSingleFlowerPackingPossibilities(Flower flower) {
         List<List<FlowerBox>> listOfPackingPossibilities = new ArrayList<>();
         List<FlowerBox> singlePackingPossibility;
-        List<List<Integer>> allFlowerSplittingPossibilities = plantPossibleSplitting.get(flower);
+        List<List<Integer>> allFlowerSplittingPossibilities = combinations.getPlantPossibleSplitting().get(flower);
         for (List<Integer> splitPossibility : allFlowerSplittingPossibilities) {
             singlePackingPossibility = new ArrayList<>();
             for (Integer plantAmount : splitPossibility) {
@@ -60,11 +45,8 @@ public class Generator {
         return listOfPackingPossibilities;
     }
 
-    //TODO delete
-    public void soutAllFlowerBoxesCombinations(){
-        for (List<List<FlowerBox>> flowerBoxesCombination : allFlowerBoxesCombinations) {
-            System.out.println(flowerBoxesCombination);
-        }
-        System.out.println(allFlowerBoxesCombinations.size());
+    public void generateAllFlowerBoxesCombinations(){
+        combinations.setAllFlowerBoxesCombinations(
+                ListCombiner.getCombinations(combinations.getListOfFlowersPackingPossibilities()));
     }
 }

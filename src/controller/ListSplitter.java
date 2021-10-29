@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SplittingGenerator {
+public class ListSplitter {
     private static List<List<Integer>> splittingList;
 
     public static List<List<Integer>> split(int n) {

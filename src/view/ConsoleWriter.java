@@ -1,18 +1,17 @@
 package view;
 
-import model.Border;
-import model.FlowerBox;
-import model.Plant;
-import model.Storage;
+import model.*;
 
 import java.util.List;
 import java.util.Map;
 
 public class ConsoleWriter {
-    private Storage storage;
+    private final Storage storage;
+    private final Combinations combinations;
 
-    public ConsoleWriter(Storage storage) {
+    public ConsoleWriter(Storage storage, Combinations combinations) {
         this.storage = storage;
+        this.combinations = combinations;
     }
 
     public void printBorders(){
@@ -43,5 +42,22 @@ public class ConsoleWriter {
             System.out.println(plant.getPlantType() + " amount: " + plantAmounts.get(plant));
         }
         System.out.println();
+    }
+
+    public void printPossibleSplittings(){
+        for (Plant plant : combinations.getPlantPossibleSplitting().keySet()) {
+            System.out.println("plant: " + plant.getPlantType());
+            for (List<Integer> partitions : combinations.getPlantPossibleSplitting().get(plant)) {
+                System.out.println(partitions);
+            }
+            System.out.println();
+        }
+    }
+
+    public void printAllFlowerBoxesCombinations(){
+        for (List<List<FlowerBox>> flowerBoxesCombination : combinations.getAllFlowerBoxesCombinations()) {
+            System.out.println(flowerBoxesCombination);
+        }
+        System.out.println(combinations.getAllFlowerBoxesCombinations().size());
     }
 }
