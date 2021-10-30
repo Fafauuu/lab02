@@ -66,15 +66,12 @@ public class ConsoleWriter {
 
         for (List<Border> bordersFillingPossibility : combinations.getBordersFillingPossibilities()) {
             for (Border border : bordersFillingPossibility) {
-                bordersPossibilities.append(String.format("%-50s", border.toString()));
+                bordersPossibilities.append(String.format("%-60s", border.toString()));
             }
             bordersPossibilities.append("\n");
         }
         System.out.println(bordersPossibilities);
 
-//        for (List<Border> bordersFillingPossibility : combinations.getBordersFillingPossibilities()) {
-//            System.out.println(bordersFillingPossibility);
-//        }
         System.out.println(combinations.getBordersFillingPossibilities().size());
     }
 }
