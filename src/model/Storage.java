@@ -20,6 +20,14 @@ public class Storage {
         return borders;
     }
 
+    public List<Border> getBordersCopy(){
+        List<Border> bordersCopy = new ArrayList<>(borders.size());
+        for (Border border : borders) {
+            bordersCopy.add(new Border(border.getBorderNumber(), border.getArea()));
+        }
+        return bordersCopy;
+    }
+
     public void setBorders(List<Border> borders) {
         this.borders = borders;
     }

@@ -49,4 +49,67 @@ public class Generator {
         combinations.setAllFlowerBoxesCombinations(
                 ListCombiner.getCombinations(combinations.getListOfFlowersPackingPossibilities()));
     }
+
+    public void generateBordersFillingPossibilities(){
+        List<Border> borders = storage.getBorders();
+        Set<List<Integer>> bordersFillingOrder = createBordersFillingOrder();
+        List<List<List<FlowerBox>>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
+
+        for (List<List<FlowerBox>> combination : allFlowerBoxesCombinations) {
+            List<FlowerBox> flowerBoxList = combineFlowerBoxesList(combination);
+            for (List<Integer> fillingOrder : bordersFillingOrder) {
+
+            }
+        }
+
+    }
+
+    private Set<List<Integer>> createBordersFillingOrder(){
+        int numberOfBorders = storage.getBorders().size();
+        List<Integer> listToPermute = new ArrayList<>(9);
+
+        //generator works precisely for border amount less than 5;
+        //after that algorithm is simplified because of run time issue
+        int iterations;
+        switch (numberOfBorders) {
+            case 2:
+            case 4:
+                iterations = 2;
+                break;
+            case 3:
+                iterations = 3;
+                break;
+            default: iterations = 1;
+        }
+        for (int i = 0; i < (iterations); i++) {
+            for (int j = 1; j <= numberOfBorders; j++) {
+                listToPermute.add(j);
+            }
+        }
+        int[] arrayToPermute = listToPermute.stream().mapToInt(i -> i).toArray();
+        return IntPermutations.permute(arrayToPermute);
+    }
+
+    private List<FlowerBox> combineFlowerBoxesList(List<List<FlowerBox>> combination) {
+        List<FlowerBox> newFlowerBoxes = new ArrayList<>();
+        for (List<FlowerBox> flowerBoxList : combination) {
+            newFlowerBoxes.addAll(flowerBoxList);
+        }
+        return newFlowerBoxes;
+    }
+
+    //        Set<List<Border>> borderPossibilities = new HashSet<>();
+//        List<Border> list1 = storage.getBordersCopy();
+//        List<Border> list2 = storage.getBordersCopy();
+////        List<Border> list3 = new ArrayList<>(3);
+//        list1.get(0).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),2));
+//        list1.get(1).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),3));
+//
+//        list2.get(0).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),2));
+//        list2.get(1).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),3));
+//
+//        borderPossibilities.add(list1);
+//        borderPossibilities.add(list2);
+//
+//        combinations.setBordersFillingPossibilities(borderPossibilities);
 }

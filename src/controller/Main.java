@@ -12,16 +12,18 @@ public class Main {
         storage.setPlantAmounts(CsvReader.readPlantAmounts("flowerAmounts.csv"));
 
         Combinations combinations = new Combinations();
-
         Generator generator = new Generator(storage, combinations);
+        ConsoleWriter consoleWriter = new ConsoleWriter(storage, combinations);
+
         generator.generateAllPlantSplittings();
         generator.generateListOfFlowersPackingPossibilities();
         generator.generateAllFlowerBoxesCombinations();
+        generator.generateBordersFillingPossibilities();
 
-        ConsoleWriter consoleWriter = new ConsoleWriter(storage, combinations);
         consoleWriter.printBorders();
         consoleWriter.printPlants();
         consoleWriter.printPossibleSplittings();
         consoleWriter.printAllFlowerBoxesCombinations();
+//        consoleWriter.printBorderFillingPossibilities();
     }
 }

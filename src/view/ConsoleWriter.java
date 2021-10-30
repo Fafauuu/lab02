@@ -60,4 +60,11 @@ public class ConsoleWriter {
         }
         System.out.println(combinations.getAllFlowerBoxesCombinations().size());
     }
+
+    public void printBorderFillingPossibilities(){
+        for (List<Border> bordersFillingPossibility : combinations.getBordersFillingPossibilities()) {
+            System.out.println(bordersFillingPossibility);
+        }
+        System.out.println(combinations.getBordersFillingPossibilities().size());
+    }
 }

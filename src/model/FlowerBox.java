@@ -3,12 +3,14 @@ package model;
 import java.util.Objects;
 
 public class FlowerBox {
-    private Flower flower;
-    private int quantity;
+    private final Flower flower;
+    private final int quantity;
+    private final float spaceRequired;
 
     public FlowerBox(Flower flower, int quantity) {
         this.flower = flower;
         this.quantity = quantity;
+        this.spaceRequired = flower.getSpace() * quantity;
     }
 
     public Flower getFlower() {
@@ -17,6 +19,10 @@ public class FlowerBox {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public float getSpaceRequired() {
+        return spaceRequired;
     }
 
     @Override
