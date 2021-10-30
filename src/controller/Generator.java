@@ -46,17 +46,29 @@ public class Generator {
     }
 
     public void generateAllFlowerBoxesCombinations(){
-        combinations.setAllFlowerBoxesCombinations(
-                ListCombiner.getCombinations(combinations.getListOfFlowersPackingPossibilities()));
+        List<List<List<FlowerBox>>> flowerBoxesList = ListCombiner.getCombinations(
+                combinations.getListOfFlowersPackingPossibilities());
+        List<List<FlowerBox>> newList = new ArrayList<>();
+        for (List<List<FlowerBox>> flowerBoxes : flowerBoxesList) {
+            newList.add(combineFlowerBoxesList(flowerBoxes));
+        }
+        combinations.setAllFlowerBoxesCombinations(newList);
+    }
+
+    private List<FlowerBox> combineFlowerBoxesList(List<List<FlowerBox>> combination) {
+        List<FlowerBox> newFlowerBoxes = new ArrayList<>();
+        for (List<FlowerBox> flowerBoxList : combination) {
+            newFlowerBoxes.addAll(flowerBoxList);
+        }
+        return newFlowerBoxes;
     }
 
     public void generateBordersFillingPossibilities(){
         List<Border> borders = storage.getBorders();
         Set<List<Integer>> bordersFillingOrder = createBordersFillingOrder();
-        List<List<List<FlowerBox>>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
+        List<List<FlowerBox>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
 
-        for (List<List<FlowerBox>> combination : allFlowerBoxesCombinations) {
-            List<FlowerBox> flowerBoxList = combineFlowerBoxesList(combination);
+        for (List<FlowerBox> combination : allFlowerBoxesCombinations) {
             for (List<Integer> fillingOrder : bordersFillingOrder) {
 
             }
@@ -88,14 +100,6 @@ public class Generator {
         }
         int[] arrayToPermute = listToPermute.stream().mapToInt(i -> i).toArray();
         return IntPermutations.permute(arrayToPermute);
-    }
-
-    private List<FlowerBox> combineFlowerBoxesList(List<List<FlowerBox>> combination) {
-        List<FlowerBox> newFlowerBoxes = new ArrayList<>();
-        for (List<FlowerBox> flowerBoxList : combination) {
-            newFlowerBoxes.addAll(flowerBoxList);
-        }
-        return newFlowerBoxes;
     }
 
     //        Set<List<Border>> borderPossibilities = new HashSet<>();

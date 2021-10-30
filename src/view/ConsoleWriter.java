@@ -55,7 +55,7 @@ public class ConsoleWriter {
     }
 
     public void printAllFlowerBoxesCombinations(){
-        for (List<List<FlowerBox>> flowerBoxesCombination : combinations.getAllFlowerBoxesCombinations()) {
+        for (List<FlowerBox> flowerBoxesCombination : combinations.getAllFlowerBoxesCombinations()) {
             System.out.println(flowerBoxesCombination);
         }
         System.out.println(combinations.getAllFlowerBoxesCombinations().size());
