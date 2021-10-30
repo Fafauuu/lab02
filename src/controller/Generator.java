@@ -45,7 +45,7 @@ public class Generator {
         return listOfPackingPossibilities;
     }
 
-    public void generateAllFlowerBoxesCombinations(){
+    public void generateAllFlowerBoxesCombinations() {
         List<List<List<FlowerBox>>> flowerBoxesList = ListCombiner.getCombinations(
                 combinations.getListOfFlowersPackingPossibilities());
         List<List<FlowerBox>> newList = new ArrayList<>();
@@ -63,20 +63,31 @@ public class Generator {
         return newFlowerBoxes;
     }
 
-    public void generateBordersFillingPossibilities(){
-        List<Border> borders = storage.getBorders();
+    public void generateBordersFillingPossibilities() {
+        Set<List<Border>> bordersFillingPossibilities = new HashSet<>();
         Set<List<Integer>> bordersFillingOrder = createBordersFillingOrder();
         List<List<FlowerBox>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
+        List<Border> borders;
 
         for (List<FlowerBox> combination : allFlowerBoxesCombinations) {
             for (List<Integer> fillingOrder : bordersFillingOrder) {
+                borders = storage.getBordersCopy();
 
+                int orderIndex = 0;
+                for (FlowerBox flowerBox : combination) {
+                    borders.get(fillingOrder.get(orderIndex)).addFlowerBox(flowerBox);
+                    orderIndex++;
+                    if (orderIndex == fillingOrder.size()){
+                        orderIndex = 0;
+                    }
+                }
+                bordersFillingPossibilities.add(borders);
             }
         }
-
+        combinations.setBordersFillingPossibilities(bordersFillingPossibilities);
     }
 
-    private Set<List<Integer>> createBordersFillingOrder(){
+    private Set<List<Integer>> createBordersFillingOrder() {
         int numberOfBorders = storage.getBorders().size();
         List<Integer> listToPermute = new ArrayList<>(9);
 
@@ -91,29 +102,15 @@ public class Generator {
             case 3:
                 iterations = 3;
                 break;
-            default: iterations = 1;
+            default:
+                iterations = 1;
         }
         for (int i = 0; i < (iterations); i++) {
-            for (int j = 1; j <= numberOfBorders; j++) {
+            for (int j = 0; j < numberOfBorders; j++) {
                 listToPermute.add(j);
             }
         }
         int[] arrayToPermute = listToPermute.stream().mapToInt(i -> i).toArray();
         return IntPermutations.permute(arrayToPermute);
     }
-
-    //        Set<List<Border>> borderPossibilities = new HashSet<>();
-//        List<Border> list1 = storage.getBordersCopy();
-//        List<Border> list2 = storage.getBordersCopy();
-////        List<Border> list3 = new ArrayList<>(3);
-//        list1.get(0).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),2));
-//        list1.get(1).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),3));
-//
-//        list2.get(0).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),2));
-//        list2.get(1).addFlowerBox(new FlowerBox((Flower) storage.getPlants().get(0),3));
-//
-//        borderPossibilities.add(list1);
-//        borderPossibilities.add(list2);
-//
-//        combinations.setBordersFillingPossibilities(borderPossibilities);
 }

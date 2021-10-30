@@ -51,4 +51,11 @@ public class Border{
     public int hashCode() {
         return Objects.hash(borderNumber, flowerBoxes);
     }
+
+    @Override
+    public String toString() {
+        return "{borderNumber=" + borderNumber +
+                ", flowerBoxes=" + flowerBoxes +
+                '}';
+    }
 }

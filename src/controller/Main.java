@@ -20,10 +20,10 @@ public class Main {
         generator.generateAllFlowerBoxesCombinations();
         generator.generateBordersFillingPossibilities();
 
-        consoleWriter.printBorders();
-        consoleWriter.printPlants();
-        consoleWriter.printPossibleSplittings();
-        consoleWriter.printAllFlowerBoxesCombinations();
-//        consoleWriter.printBorderFillingPossibilities();
+//        consoleWriter.printBorders();
+//        consoleWriter.printPlants();
+//        consoleWriter.printPossibleSplittings();
+//        consoleWriter.printAllFlowerBoxesCombinations();
+        consoleWriter.printBorderFillingPossibilities();
     }
 }
