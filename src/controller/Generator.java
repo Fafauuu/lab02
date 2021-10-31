@@ -69,6 +69,12 @@ public class Generator {
         List<List<FlowerBox>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
         List<Border> borders;
 
+        int allFlowersInStorageAmount = 0;
+        Map<Plant, Integer> plantAmounts = storage.getPlantAmounts();
+        for (Integer value : plantAmounts.values()) {
+            allFlowersInStorageAmount += value;
+        }
+
         for (List<FlowerBox> combination : allFlowerBoxesCombinations) {
             for (List<Integer> fillingOrder : bordersFillingOrder) {
                 borders = storage.getBordersCopy();
@@ -81,7 +87,26 @@ public class Generator {
                         orderIndex = 0;
                     }
                 }
-                bordersFillingPossibilities.add(borders);
+                boolean viableToAdd = true;
+                for (Border border : borders) {
+                    if (border.isEmpty() || !border.isBloomingEveryMonth()) {
+                        viableToAdd = false;
+                        break;
+                    }
+                }
+
+                int flowerAmount = 0;
+                for (Border border : borders) {
+                    for (FlowerBox flowerBox : border.getFlowerBoxes()) {
+                        flowerAmount += flowerBox.getQuantity();
+                    }
+                }
+
+                if (flowerAmount != allFlowersInStorageAmount) viableToAdd = false;
+
+                if (viableToAdd){
+                    bordersFillingPossibilities.add(borders);
+                }
             }
         }
         combinations.setBordersFillingPossibilities(bordersFillingPossibilities);
@@ -91,7 +116,7 @@ public class Generator {
         int numberOfBorders = storage.getBorders().size();
         List<Integer> listToPermute = new ArrayList<>(9);
 
-        //generator works precisely for border amount less than 5;
+        //generator works precisely for border amount less than 4;
         //after that algorithm is simplified because of run time issue
         int iterations;
         switch (numberOfBorders) {

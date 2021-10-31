@@ -28,7 +28,7 @@ public class FlowerBox {
     @Override
     public String toString() {
         return flower.getPlantType() +
-                "-" + quantity;
+                "," + quantity;
     }
 
     @Override

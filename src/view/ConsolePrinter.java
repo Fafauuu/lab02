@@ -5,11 +5,11 @@ import model.*;
 import java.util.List;
 import java.util.Map;
 
-public class ConsoleWriter {
+public class ConsolePrinter {
     private final Storage storage;
     private final Combinations combinations;
 
-    public ConsoleWriter(Storage storage, Combinations combinations) {
+    public ConsolePrinter(Storage storage, Combinations combinations) {
         this.storage = storage;
         this.combinations = combinations;
     }
@@ -62,16 +62,34 @@ public class ConsoleWriter {
     }
 
     public void printBorderFillingPossibilities(){
-        StringBuilder bordersPossibilities = new StringBuilder();
-
-        for (List<Border> bordersFillingPossibility : combinations.getBordersFillingPossibilities()) {
-            for (Border border : bordersFillingPossibility) {
-                bordersPossibilities.append(String.format("%-60s", border.toString()));
-            }
-            bordersPossibilities.append("\n");
-        }
-        System.out.println(bordersPossibilities);
+//        StringBuilder bordersPossibilities = new StringBuilder();
+//
+//        for (List<Border> bordersFillingPossibility : combinations.getBordersFillingPossibilities()) {
+//            for (Border border : bordersFillingPossibility) {
+//                bordersPossibilities.append(String.format("%-70s", border.toString()));
+//            }
+//            bordersPossibilities.append("\n");
+//        }
+//        System.out.println(bordersPossibilities);
 
         System.out.println(combinations.getBordersFillingPossibilities().size());
     }
+
+    public void printBorderCombination(List<Border> borderList){
+        StringBuilder sb = new StringBuilder();
+
+        for (Border border : borderList) {
+            sb.append(border.getBorderNumber());
+            sb.append(";");
+            for (FlowerBox flowerBox : border.getFlowerBoxes()) {
+//                flowerBox.sort();
+                sb.append(flowerBox);
+                sb.append(";");
+            }
+            sb.append('\n');
+        }
+
+        System.out.println(sb);
+    }
+
 }
