@@ -29,7 +29,7 @@ public class Main {
         consolePrinter.printBorderFillingPossibilities();
 
 
-        BestCombinationChooser bestCombinationChooser1 = new BestCombinationChooser(combinations, 0);
+        BestCombinationChooser bestCombinationChooser1 = new BestCombinationChooser(combinations, 0,1);
 
 //        Iterator iter = combinations.getBordersFillingPossibilities().iterator();
 //
@@ -43,12 +43,19 @@ public class Main {
 //        System.out.println(bestCombination1);
         consolePrinter.printBorderCombination(bestCombination1);
 
-        BestCombinationChooser bestCombinationChooser2 = new BestCombinationChooser(combinations, 1);
+        BestCombinationChooser bestCombinationChooser2 = new BestCombinationChooser(combinations, 1,1);
 
         Iterator iter = combinations.getBordersFillingPossibilities().iterator();
 
         List<Border> bestCombination2 = bestCombinationChooser2.choose();
         consolePrinter.printBorderCombination(bestCombination2);
+
+        BestCombinationChooser bestCombinationChooser3 = new BestCombinationChooser(combinations, 2,1);
+
+        List<Border> bestCombination3 = bestCombinationChooser3.choose();
+        consolePrinter.printBorderCombination(bestCombination3);
+
+
 //        System.out.println(bestCombination2);
 //
 //        FlowerBox flowerBox1 = new FlowerBox((Flower) storage.getPlants().get(0), 2);

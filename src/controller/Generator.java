@@ -69,12 +69,6 @@ public class Generator {
         List<List<FlowerBox>> allFlowerBoxesCombinations = combinations.getAllFlowerBoxesCombinations();
         List<Border> borders;
 
-        int allFlowersInStorageAmount = 0;
-        Map<Plant, Integer> plantAmounts = storage.getPlantAmounts();
-        for (Integer value : plantAmounts.values()) {
-            allFlowersInStorageAmount += value;
-        }
-
         for (List<FlowerBox> combination : allFlowerBoxesCombinations) {
             for (List<Integer> fillingOrder : bordersFillingOrder) {
                 borders = storage.getBordersCopy();
@@ -94,15 +88,6 @@ public class Generator {
                         break;
                     }
                 }
-
-                int flowerAmount = 0;
-                for (Border border : borders) {
-                    for (FlowerBox flowerBox : border.getFlowerBoxes()) {
-                        flowerAmount += flowerBox.getQuantity();
-                    }
-                }
-
-                if (flowerAmount != allFlowersInStorageAmount) viableToAdd = false;
 
                 if (viableToAdd){
                     bordersFillingPossibilities.add(borders);

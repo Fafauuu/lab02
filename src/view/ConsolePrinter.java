@@ -81,8 +81,10 @@ public class ConsolePrinter {
         for (Border border : borderList) {
             sb.append(border.getBorderNumber());
             sb.append(";");
+
+            sortFlowerBoxes(border.getFlowerBoxes());
+
             for (FlowerBox flowerBox : border.getFlowerBoxes()) {
-//                flowerBox.sort();
                 sb.append(flowerBox);
                 sb.append(";");
             }
@@ -90,6 +92,14 @@ public class ConsolePrinter {
         }
 
         System.out.println(sb);
+    }
+
+    private void sortFlowerBoxes(List<FlowerBox> flowerBoxes) {
+        flowerBoxes.sort((o1, o2) -> {
+            if (o1.getFlower().getPlantType() > o2.getFlower().getPlantType()) return 1;
+            else if (o1.getFlower().getPlantType() < o2.getFlower().getPlantType()) return -1;
+            else return 0;
+        });
     }
 
 }

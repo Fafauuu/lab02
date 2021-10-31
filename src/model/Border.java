@@ -50,11 +50,11 @@ public class Border {
         for (FlowerBox box : flowerBoxes) {
             if (flowerBox.getFlower().getPlantType() == box.getFlower().getPlantType()) return;
         }
-        if (flowerBox.getSpaceRequired() > areaLeft) return;
+        if (flowerBox.getSpaceRequired()/10000 > areaLeft) return;
 
         flowerBoxes.add(flowerBox);
         empty = false;
-        areaLeft -= flowerBox.getSpaceRequired();
+        areaLeft -= flowerBox.getSpaceRequired()/10000;
     }
 
     public boolean isEmpty() {

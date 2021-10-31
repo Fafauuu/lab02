@@ -7,35 +7,63 @@ import model.FlowerBox;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class BestCombinationChooser {
     private final Combinations combinations;
     private final int filteringMode;
+    private final int colorSimilarityParameter;
+    private final Set<List<Border>> allBordersFillingPossibilities;
 
-    public BestCombinationChooser(Combinations combinations, int filteringMode) {
+    public BestCombinationChooser(Combinations combinations, int filteringMode, int colorSimilarityParameter) {
         this.combinations = combinations;
         if (filteringMode < 0 || filteringMode > 2) throw new RuntimeException("Invalid filtering mode");
         this.filteringMode = filteringMode;
+        this.colorSimilarityParameter = colorSimilarityParameter;
+        this.allBordersFillingPossibilities = combinations.getBordersFillingPossibilities();
     }
 
     public List<Border> choose() {
-        List<Border> bestCombination = new ArrayList<>();
+        List<Border> bestCombination;
         switch (filteringMode) {
             case 0: {
-                bestCombination = similarColorsCombination();
+                bestCombination = similarColorsCombination(allBordersFillingPossibilities);
             }
             break;
             case 1: {
-                bestCombination = maximumAmountCombination();
+                bestCombination = maximumAmountCombination(allBordersFillingPossibilities);
+            }
+            break;
+            default:{
+                bestCombination = combineBothFilters(allBordersFillingPossibilities);
             }
         }
         return bestCombination;
     }
 
-    private List<Border> maximumAmountCombination() {
-        Set<List<Border>> bordersFillingPossibilities = combinations.getBordersFillingPossibilities();
+    private List<Border> combineBothFilters(Set<List<Border>> bordersFillingPossibilities) {
+        List<Border> bordersWithTheMostSimilarColors = similarColorsCombination(bordersFillingPossibilities);
+        double bestColorSimilarity = calculateColorSimilarity(bordersWithTheMostSimilarColors);
+        double minimalColorSimilarity = bestColorSimilarity + Math.pow(colorSimilarityParameter, 2) * 10;
+
+        Set<List<Border>> bordersWithAskedColorSimilarity = new HashSet<>();
+
+        for (List<Border> bordersFillingPossibility : bordersFillingPossibilities) {
+            double colorSimilarity = calculateColorSimilarity(bordersFillingPossibility);
+            if (colorSimilarity <= minimalColorSimilarity){
+                bordersWithAskedColorSimilarity.add(bordersFillingPossibility);
+            }
+        }
+
+        System.out.println(minimalColorSimilarity);
+        System.out.println(bordersWithAskedColorSimilarity.size());
+        System.out.println(calculateColorSimilarity(maximumAmountCombination(bordersWithAskedColorSimilarity)));
+        return maximumAmountCombination(bordersWithAskedColorSimilarity);
+    }
+
+    private List<Border> maximumAmountCombination(Set<List<Border>> bordersFillingPossibilities) {
         List<Border> bestCombination = bordersFillingPossibilities.iterator().next();
         int bestCombinationBloomingAmount = calculateBloomingAmount(bestCombination);
 
@@ -50,20 +78,19 @@ public class BestCombinationChooser {
         return bestCombination;
     }
 
-    public int calculateBloomingAmount(List<Border> bestCombination) {
+    private int calculateBloomingAmount(List<Border> bestCombination) {
         int bloomingAmount = 0;
         for (int i = 0; i < 12; i++) {
             for (Border border : bestCombination) {
                 for (FlowerBox flowerBox : border.getFlowerBoxes()) {
-                    if (flowerBox.getFlower().getBlooming()[i]) bloomingAmount++;
+                    if (flowerBox.getFlower().getBlooming()[i]) bloomingAmount += flowerBox.getQuantity();
                 }
             }
         }
         return bloomingAmount;
     }
 
-    private List<Border> similarColorsCombination() {
-        Set<List<Border>> bordersFillingPossibilities = combinations.getBordersFillingPossibilities();
+    private List<Border> similarColorsCombination(Set<List<Border>> bordersFillingPossibilities) {
         List<Border> bestCombination = bordersFillingPossibilities.iterator().next();
         double bestCombinationSimilarity = calculateColorSimilarity(bestCombination);
 
@@ -76,6 +103,7 @@ public class BestCombinationChooser {
         }
 
         System.out.println(bestCombinationSimilarity);
+        System.out.println(calculateBloomingAmount(bestCombination));
         return bestCombination;
     }
 
