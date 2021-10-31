@@ -56,10 +56,6 @@ public class BestCombinationChooser {
                 bordersWithAskedColorSimilarity.add(bordersFillingPossibility);
             }
         }
-
-        System.out.println(minimalColorSimilarity);
-        System.out.println(bordersWithAskedColorSimilarity.size());
-        System.out.println(calculateColorSimilarity(maximumAmountCombination(bordersWithAskedColorSimilarity)));
         return maximumAmountCombination(bordersWithAskedColorSimilarity);
     }
 
@@ -74,7 +70,6 @@ public class BestCombinationChooser {
                 bestCombinationBloomingAmount = bloomingAmount;
             }
         }
-        System.out.println(bestCombinationBloomingAmount);
         return bestCombination;
     }
 
@@ -101,9 +96,6 @@ public class BestCombinationChooser {
                 bestCombinationSimilarity = similarity;
             }
         }
-
-        System.out.println(bestCombinationSimilarity);
-        System.out.println(calculateBloomingAmount(bestCombination));
         return bestCombination;
     }
 
